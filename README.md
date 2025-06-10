@@ -223,3 +223,22 @@ For support, email support@communityhope.com or create an issue on GitHub.
 ---
 
 **Made with ❤️ for the community**
+
+```
+// Environment variables
+# Demo environment variables
+VITE_SUPABASE_URL=https://demo.supabase.co
+VITE_SUPABASE_ANON_KEY=demo_key
+
+# M-Pesa Configuration
+MPESA_ENVIRONMENT=sandbox
+MPESA_CONSUMER_KEY=VKpFfX0GP08AYIV6FAiVNiGTiaDU9C5qXh4TgFR9oAEgJNNL
+MPESA_CONSUMER_SECRET=i5KX5c2S6J48BXbYm71F5ltNK3GGVrj1s8OlvtX1Ptn3k5xg8Qsz3QtAETijAQR6
+MPESA_SHORTCODE=174379
+MPESA_PASSKEY=bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919
+MPESA_CALLBACK_URL=https://webhook.site/unique-id
+
+# Application Configuration
+VITE_APP_NAME=Community Hope
+VITE_APP_URL=http://localhost:5173
+```
