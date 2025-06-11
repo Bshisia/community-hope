@@ -27,6 +27,8 @@
 	"dependencies": {
 		"@supabase/supabase-js": "^2.50.0",
 		"@tailwindcss/typography": "^0.5.16",
+		"@types/better-sqlite3": "^7.6.13",
+		"better-sqlite3": "^11.10.0",
 		"lucide-svelte": "^0.514.0"
 	}
 }
