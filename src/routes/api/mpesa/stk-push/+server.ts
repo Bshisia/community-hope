@@ -194,7 +194,11 @@ export const POST: RequestHandler = async ({ request }) => {
         );
       }
     } catch (networkError) {
-      console.log('M-Pesa network error, falling back to demo mode:', networkError.message);
+      if (networkError instanceof Error) {
+        console.log('M-Pesa network error, falling back to demo mode:', networkError.message);
+      } else {
+        console.log('M-Pesa network error, falling back to demo mode:', networkError);
+      }
 
       // Fallback to demo mode for testing
       await new Promise(resolve => setTimeout(resolve, 2000));
