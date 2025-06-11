@@ -2,9 +2,20 @@
   import '../app.css';
   import { page } from '$app/stores';
   import { Heart, Menu, X } from 'lucide-svelte';
+
   
   let mobileMenuOpen = false;
-  
+
+
+  function formatAmount(amount: number): string {
+    return new Intl.NumberFormat('en-KE', {
+      style: 'currency',
+      currency: 'KES',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(amount);
+  }
+
   function toggleMobileMenu() {
     mobileMenuOpen = !mobileMenuOpen;
   }
@@ -16,7 +27,7 @@
 
 <svelte:head>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
 </svelte:head>
 
 <div class="min-h-screen bg-gray-50">
