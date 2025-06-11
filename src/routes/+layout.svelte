@@ -2,9 +2,26 @@
   import '../app.css';
   import { page } from '$app/stores';
   import { Heart, Menu, X } from 'lucide-svelte';
+  import { createEventDispatcher } from 'svelte';
+
   
   let mobileMenuOpen = false;
-  
+
+  const dispatch = createEventDispatcher();
+
+  function formatAmount(amount: number): string {
+    return new Intl.NumberFormat('en-KE', {
+      style: 'currency',
+      currency: 'KES',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(amount);
+  }
+
+  function handleDonate() {
+    dispatch('donate', project);
+  }
+
   function toggleMobileMenu() {
     mobileMenuOpen = !mobileMenuOpen;
   }
@@ -55,12 +72,12 @@
             >
               Admin
             </a>
-            <a 
-              href="/#donate" 
-              class="btn-secondary text-sm"
+            <button 
+              class="btn-primary flex-1"
+              on:click={handleDonate}
             >
               Donate Now
-            </a>
+            </button>
           </div>
         </div>
         
