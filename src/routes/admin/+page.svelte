@@ -9,8 +9,9 @@
     Eye,
     LogOut
   } from 'lucide-svelte';
-  import { adminService, donationsService, projectsService } from '$lib/supabase';
-  import type { Project, Donation } from '$lib/supabase';
+  import { adminService, donationsService } from '$lib/database-services.js';
+  import { projectsService } from '$lib/database.js';
+  import type { Project, Donation } from '$lib/database.js';
   
   // Authentication state
   let isAuthenticated = false;

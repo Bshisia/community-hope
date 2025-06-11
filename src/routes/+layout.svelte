@@ -55,8 +55,8 @@
             >
               Admin
             </a>
-            <a 
-              href="/#donate" 
+            <a
+              href="/#donate"
               class="btn-secondary text-sm"
             >
               Donate Now
@@ -107,8 +107,8 @@
             >
               Admin
             </a>
-            <a 
-              href="/#donate" 
+            <a
+              href="/#donate"
               class="btn-secondary block text-center mt-4"
               on:click={closeMobileMenu}
             >

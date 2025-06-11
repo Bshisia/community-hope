@@ -3,7 +3,7 @@
   import { Heart, Target, Users, TrendingUp } from 'lucide-svelte';
   import ProjectCard from '$lib/components/ProjectCard.svelte';
   import DonationModal from '$lib/components/DonationModal.svelte';
-  import type { Project } from '$lib/supabase';
+  import type { Project } from '$lib/database.js';
 
   // Sample projects data (in real app, this would come from Supabase)
   let projects: Project[] = [
@@ -217,6 +217,37 @@
           Your contribution goes directly to the project, creating real change in communities.
         </p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- Call to Action Section -->
+<section id="donate" class="py-16 bg-gradient-to-r from-primary-600 to-secondary-600 text-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h2 class="text-3xl md:text-4xl font-bold mb-4">
+      Ready to Make a Difference?
+    </h2>
+    <p class="text-xl mb-8 text-primary-100 max-w-2xl mx-auto">
+      Your anonymous donation can transform lives and strengthen communities.
+      Choose a project that speaks to your heart and contribute today.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <button
+        class="bg-white text-primary-600 hover:bg-gray-100 font-semibold py-3 px-8 rounded-lg transition-colors text-lg"
+        on:click={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+      >
+        View All Projects
+      </button>
+      <button
+        class="border-2 border-white text-white hover:bg-white hover:text-primary-600 font-semibold py-3 px-8 rounded-lg transition-all text-lg"
+        on:click={() => {
+          if (projects.length > 0) {
+            openDonationModal(projects[0]);
+          }
+        }}
+      >
+        Donate Now
+      </button>
     </div>
   </div>
 </section>
