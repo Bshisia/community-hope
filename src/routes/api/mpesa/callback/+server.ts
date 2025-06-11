@@ -1,6 +1,7 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { donationsService, projectsService } from '$lib/supabase';
+import { donationsService } from '$lib/database-services.js';
+import { projectsService } from '$lib/database.js';
 
 interface MpesaCallbackData {
   Body: {
@@ -77,38 +78,29 @@ export const POST: RequestHandler = async ({ request }) => {
       });
       
       // Update donation status in database
-      // In a real implementation, you would:
-      // 1. Find the donation record using CheckoutRequestID
-      // 2. Update its status to 'completed'
-      // 3. Update the project's raised amount
-      // 4. Send confirmation notifications if needed
-      
-      /*
       try {
         // Find donation by checkout request ID
-        const donation = await findDonationByCheckoutRequestId(CheckoutRequestID);
-        
+        const donation = donationsService.findByCheckoutRequestId(CheckoutRequestID);
+
         if (donation) {
           // Update donation status
-          await donationsService.updateStatus(
-            donation.id, 
-            'completed', 
+          donationsService.updateStatus(
+            donation.id,
+            'completed',
             metadata.mpesaReceiptNumber
           );
-          
-          // Update project raised amount
-          const project = await projectsService.getById(donation.project_id);
-          if (project) {
-            await projectsService.updateRaisedAmount(
-              project.id, 
-              project.raised_amount + donation.amount
-            );
-          }
+
+          console.log('Donation updated successfully:', {
+            donationId: donation.id,
+            amount: donation.amount,
+            receipt: metadata.mpesaReceiptNumber
+          });
+        } else {
+          console.log('Donation not found for CheckoutRequestID:', CheckoutRequestID);
         }
       } catch (error) {
         console.error('Error updating donation status:', error);
       }
-      */
       
     } else {
       // Payment failed
@@ -120,16 +112,15 @@ export const POST: RequestHandler = async ({ request }) => {
       });
       
       // Update donation status to failed
-      /*
       try {
-        const donation = await findDonationByCheckoutRequestId(CheckoutRequestID);
+        const donation = donationsService.findByCheckoutRequestId(CheckoutRequestID);
         if (donation) {
-          await donationsService.updateStatus(donation.id, 'failed');
+          donationsService.updateStatus(donation.id, 'failed');
+          console.log('Donation marked as failed:', donation.id);
         }
       } catch (error) {
         console.error('Error updating failed donation status:', error);
       }
-      */
     }
     
     // Always return success to M-Pesa to acknowledge receipt of callback

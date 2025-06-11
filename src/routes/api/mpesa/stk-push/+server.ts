@@ -4,8 +4,8 @@ import { env } from '$env/dynamic/private';
 
 // M-Pesa API configuration
 const MPESA_ENVIRONMENT = env.MPESA_ENVIRONMENT || 'sandbox';
-const CONSUMER_KEY = env.MPESA_CONSUMER_KEY || '';
-const CONSUMER_SECRET = env.MPESA_CONSUMER_SECRET || '';
+const CONSUMER_KEY = env.MPESA_CONSUMER_KEY || 'VKpFfX0GP08AYIV6FAiVNiGTiaDU9C5qXh4TgFR9oAEgJNNL';
+const CONSUMER_SECRET = env.MPESA_CONSUMER_SECRET || 'i5KX5c2S6J48BXbYm71F5ltNK3GGVrj1s8OlvtX1Ptn3k5xg8Qsz3QtAETijAQR6';
 const SHORTCODE = env.MPESA_SHORTCODE || '174379';
 const PASSKEY = env.MPESA_PASSKEY || 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919';
 
@@ -145,7 +145,16 @@ export const POST: RequestHandler = async ({ request }) => {
     }
     
     // Check if we have valid credentials for real M-Pesa integration
+    console.log('Environment check:', {
+      MPESA_ENVIRONMENT,
+      CONSUMER_KEY: CONSUMER_KEY ? `${CONSUMER_KEY.substring(0, 10)}...` : 'NOT SET',
+      CONSUMER_SECRET: CONSUMER_SECRET ? `${CONSUMER_SECRET.substring(0, 10)}...` : 'NOT SET',
+      SHORTCODE,
+      PASSKEY: PASSKEY ? `${PASSKEY.substring(0, 20)}...` : 'NOT SET'
+    });
+
     if (!CONSUMER_KEY || !CONSUMER_SECRET) {
+      console.log('Missing credentials:', { CONSUMER_KEY: !!CONSUMER_KEY, CONSUMER_SECRET: !!CONSUMER_SECRET });
       return json(
         { success: false, message: 'M-Pesa credentials not configured' },
         { status: 500 }
@@ -194,7 +203,11 @@ export const POST: RequestHandler = async ({ request }) => {
         );
       }
     } catch (networkError) {
-      console.log('M-Pesa network error, falling back to demo mode:', networkError.message);
+      if (networkError && typeof networkError === 'object' && 'message' in networkError) {
+        console.log('M-Pesa network error, falling back to demo mode:', (networkError as { message: string }).message);
+      } else {
+        console.log('M-Pesa network error, falling back to demo mode:', networkError);
+      }
 
       // Fallback to demo mode for testing
       await new Promise(resolve => setTimeout(resolve, 2000));
